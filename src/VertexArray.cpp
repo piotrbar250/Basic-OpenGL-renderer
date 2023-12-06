@@ -8,6 +8,7 @@ VertexArray::VertexArray()
 
 VertexArray::~VertexArray()
 {
+    glDeleteVertexArrays(1, &m_RenderID);
 }
 
 void VertexArray::AddBuffer(const VertexBuffer &vbo, const VertexBufferLayout &layout)
@@ -16,12 +17,12 @@ void VertexArray::AddBuffer(const VertexBuffer &vbo, const VertexBufferLayout &l
     vbo.Bind();
     const std::vector<VertexBufferElement>& elements = layout.GetElements();
     unsigned int offset = 0;
-    for(unsigned int i = 0; elements.size(); i++)
+    for(unsigned int i = 0; i < elements.size(); i++)
     {
         const auto& element = elements[i];
-        // glVertexAttribPointer(i, element.count, element.type, element.normalized, layout.getStride(), (const void*)offset);
         glVertexAttribPointer(i, element.count, element.type, element.normalized, layout.getStride(), reinterpret_cast<const void*>(static_cast<std::uintptr_t>(offset)));
         glEnableVertexAttribArray(i);
+
         offset += element.count * VertexBufferElement::GetSizeOfType(element.type);
     }
 }

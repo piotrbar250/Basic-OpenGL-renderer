@@ -2,6 +2,9 @@
 
 // #include "GL/glew.h"
 #include <glad/glad.h>
+#include "VertexArray.h"
+#include "ElementBuffer.h"
+#include "Shader.h"
 
 #define ASSERT(x) if(!(x)) __debugbreak();
 #define GLCall(x) GLClearError();\
@@ -12,4 +15,9 @@ void GLClearError();
 
 static bool GLLogCall(const char* function, const char* file, int line);
 
-void hello();
+class Renderer
+{
+public:
+    void Clear() const;
+    void Draw(const VertexArray& VAO, const ElementBuffer& EBO, const Shader& shader) const;
+};

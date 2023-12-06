@@ -16,6 +16,9 @@ add_executable(app
     src/VertexArray.h
     src/VertexArray.cpp
     src/VertexBufferLayout.h
+
+    src/Shader.h
+    src/Shader.cpp
 )
 
 target_link_libraries(app

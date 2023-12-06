@@ -3,6 +3,9 @@
 #include <vector>
 #include <stdexcept> 
 
+#include <iostream>
+using namespace std;
+
 struct VertexBufferElement
 {
     unsigned int type;
@@ -41,12 +44,10 @@ public:
     inline unsigned int getStride() const { return m_Stride; }
 };
 
-// why inline ?? 
 template <>
 inline void VertexBufferLayout::Push<float>(unsigned int count)
-{
+{        
     m_Elements.push_back({ GL_FLOAT, count, GL_FALSE });
-    // m_Stride += sizeof(GLfloat) * count; // ?????
     m_Stride += VertexBufferElement::GetSizeOfType(GL_FLOAT) * count;
 }
 
@@ -54,16 +55,12 @@ template <>
 inline void VertexBufferLayout::Push<unsigned int>(unsigned int count)
 {
     m_Elements.push_back({ GL_UNSIGNED_INT, count, GL_FALSE });
-    // m_Stride += sizeof(GLuint) * count;
     m_Stride += VertexBufferElement::GetSizeOfType(GL_UNSIGNED_INT) * count;
-
 }
 
 template <>
 inline void VertexBufferLayout::Push<unsigned char>(unsigned int count)
 {
     m_Elements.push_back({ GL_UNSIGNED_BYTE, count, GL_TRUE });
-    // m_Stride += sizeof(GLbyte) * count;
     m_Stride += VertexBufferElement::GetSizeOfType(GL_UNSIGNED_BYTE) * count;
-
 }
